@@ -17,7 +17,11 @@ pip freeze > requirements.txt
 ```
 source venv/bin/activate
 ```
+>for windows powershell
+```
+./venv/Scripts/activate.ps1
+```
 >for windows cmd
 ```
-./venv/bin/activate
+call venv/Scripts/activate
 ```
