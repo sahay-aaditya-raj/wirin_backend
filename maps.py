@@ -16,9 +16,10 @@ def generate_url(destination: str) -> str:
     destination = destination.replace(" ","+")
     coordinates = get_current_location()
     if coordinates:
-        return f"https://www.google.com/maps/dir/?api=1&origin={coordinates['lat']},{coordinates['long']}&destination={destination}&travelmode=driving"
+        return f"https://www.openstreetmap.org/directions?engine=osrm_car&route={coordinates['lat']}%2C{coordinates['long']}%3B{destination}"
     else:
         return ""
+
 
 
 def open_url() -> None:
