@@ -21,9 +21,9 @@ def generate_url(destination: str) -> str:
         return ""
 
 
-def open_url() -> None:
-    webbrowser.open(generate_url("Majestic Metro Station, Bengaluru"))
+def open_url(destination: str) -> None:
+    webbrowser.open(generate_url(destination))
 
 
 if __name__ == '__main__':
-    open_url()
+    open_url("MGR Chennai Central")
