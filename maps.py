@@ -1,7 +1,6 @@
 import geocoder
 import webbrowser
 
-
 def get_current_location() -> dict :
     g = geocoder.ip('me')
 
@@ -11,7 +10,6 @@ def get_current_location() -> dict :
     else:
         return {}
 
-
 def generate_url(destination: str) -> str:
     destination = destination.replace(" ","+")
     coordinates = get_current_location()
@@ -20,10 +18,8 @@ def generate_url(destination: str) -> str:
     else:
         return ""
 
-
 def open_url(destination: str) -> None:
     webbrowser.open(generate_url(destination))
-
 
 if __name__ == '__main__':
     open_url("MGR Chennai Central")
