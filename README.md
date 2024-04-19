@@ -21,6 +21,8 @@ source venv/bin/activate
 ```
 ./venv/Scripts/activate.ps1
 ```
+
+### main.py is entry point for ui and speech to text
 >for windows cmd
 ```
 call venv/Scripts/activate
