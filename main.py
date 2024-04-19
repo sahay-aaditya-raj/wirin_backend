@@ -1,15 +1,38 @@
-from flask import Flask, jsonify, request
-from flask_cors import CORS  # Import CORS from flask_cors
+import streamlit as st
+from openai import OpenAI
+from speech import speech_to_text
 
-app = Flask(__name__)
-CORS(app)  # Apply CORS to your Flask app
+client = OpenAI(
+    # This is the default and can be omitted
+    api_key="API_KEY",
+)
 
-# Sample endpoint to receive POST requests
-@app.route('/', methods=['POST'])
-def receive_data():
-    data = request.get_json()
-    print("Received Data:", data)
-    return jsonify({"message": "Data received successfully"}), 200
+# Function to generate OpenAI response based on input text
+def generate_openai_response(input_text):
+    chat_completion = client.chat.completions.create(
+        messages=[
+            {
+                "role": "user",
+                "content": f"{input_text}",
+            }
+        ],
+        model="gpt-3.5-turbo",
+    )
+    return chat_completion['choices'][0]['message']['content']
 
-if __name__ == '__main__':
-    app.run(debug=True)
+def main():
+    st.title("OpenAI Text Generation")
+
+    # Button to start/stop the conversation loop
+    start_stop_button = st.button("Start Conversation", key="start_stop_button")
+
+    if start_stop_button:
+        user_input = speech_to_text(st)
+        st.write(f"You said: {user_input}")
+        #openai_response = generate_openai_response(user_input)
+        #st.write(openai_response)
+
+    if st.button("Reset"):
+        st.empty()
+if __name__ == "__main__":
+    main()
