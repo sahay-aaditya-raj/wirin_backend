@@ -1,0 +1,7 @@
+aiohttp==3.9.4
+geopy==2.4.1
+mapbox==0.18.1
+nest_asyncio==1.6.0
+networkx==3.3
+openai==1.23.1
+osmnx==1.9.2
