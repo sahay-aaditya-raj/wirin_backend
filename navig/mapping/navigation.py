@@ -34,7 +34,7 @@ class LRUCache:
 
 
 async def get_openai_response(prompt):
-  client = OpenAI(api_key="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")  
+  client = OpenAI(api_key="")  
   response = await client.chat.completions.create(
       model="gpt-3.5-turbo-0125",
       messages=[
@@ -86,7 +86,7 @@ async def fetch_osmnx_data(G, source_coords, dest_coords, cache=None):
 async def main():
     location_name = input("Enter a destination: ")
     source_name = input("Enter the source: ")
-    api_key = 'pk.eyJ1IjoibWh1emFpZiIsImEiOiJjbHY1ZHdyY3QwMXdiMmpuejU3aTlyNGRmIn0.hTBH1a_vQP9cQmOeTjikCA'  # Replace with your Mapbox API key
+    api_key = ''  # Replace with your Mapbox API key
 
     source_coords = get_coordinates(source_name, api_key)
     dest_coords = get_coordinates(location_name, api_key)

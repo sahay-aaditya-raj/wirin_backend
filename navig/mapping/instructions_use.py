@@ -162,7 +162,7 @@ def create_instructions(coordinates):
 
 def model(start_longitude, start_latitude, end_longitude, end_latitude):
     # Replace '<UserAccessToken />' with your actual Mapbox access token
-    access_token = 'sk.eyJ1IjoibWh1emFpZiIsImEiOiJjbHY1ZTV4MXkwMjI3MmlvYmlsanRiOHV0In0.CdSe8c-I7ABdMncnBILlcg'  # Replace this with your actual access token
+    access_token = ''  # Replace this with your actual access token
 
     # # Prompt user for starting and ending coordinates
     # start_longitude = float(input("Enter the starting longitude: "))
