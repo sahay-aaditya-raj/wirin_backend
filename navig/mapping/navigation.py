@@ -6,6 +6,7 @@ from openai import OpenAI
 from geopy.geocoders import MapBox
 from geopy.exc import GeocoderAuthenticationFailure
 from collections import OrderedDict
+from instructions_use import model
 
 # Function to fetch data from Mapbox API with advanced caching
 class LRUCache:
@@ -30,8 +31,10 @@ class LRUCache:
             self.cache.popitem(last=False)
         self.cache[key] = value
 
+
+
 async def get_openai_response(prompt):
-  client = OpenAI(api_key="")  
+  client = OpenAI(api_key="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")  
   response = await client.chat.completions.create(
       model="gpt-3.5-turbo-0125",
       messages=[
@@ -83,37 +86,40 @@ async def fetch_osmnx_data(G, source_coords, dest_coords, cache=None):
 async def main():
     location_name = input("Enter a destination: ")
     source_name = input("Enter the source: ")
-    api_key = ''  # Replace with your Mapbox API key
+    api_key = 'pk.eyJ1IjoibWh1emFpZiIsImEiOiJjbHY1ZHdyY3QwMXdiMmpuejU3aTlyNGRmIn0.hTBH1a_vQP9cQmOeTjikCA'  # Replace with your Mapbox API key
 
     source_coords = get_coordinates(source_name, api_key)
     dest_coords = get_coordinates(location_name, api_key)
+
+    # main(source_coords[0], source_coords[1], dest_coords[0], dest_coords[1])
     if source_coords and dest_coords:
         print(f"Coordinates for source ({source_name}): {source_coords}")
         print(f"Coordinates for destination ({location_name}): {dest_coords}")
-
+        
+        model(float(source_coords[1]),float(source_coords[0]),float(dest_coords[1]),float(dest_coords[0]))
         # Download street network data
-        G = ox.graph_from_point(source_coords, network_type='drive')
+        # G = ox.graph_from_point(source_coords, network_type='drive')
 
-        # Fetch route using OSMnx
-        route, route_length = await fetch_osmnx_data(G, source_coords, dest_coords)
-        if route:
-            # Convert node IDs to coordinates for better readability
-            route_coords = [(G.nodes[node]['x'], G.nodes[node]['y']) for node in route]
+        # # Fetch route using OSMnx
+        # route, route_length = await fetch_osmnx_data(G, source_coords, dest_coords)
+        # if route:
+        #     # Convert node IDs to coordinates for better readability
+        #     route_coords = [(G.nodes[node]['x'], G.nodes[node]['y']) for node in route]
 
-            print(f"Route: {route_coords}")
-            print(f"Estimated distance: {route_length:.2f} meters")
+        #     print(f"Route: {route_coords}")
+        #     print(f"Estimated distance: {route_length:.2f} meters")
 
-            # Use OpenAI to craft a response 
-            prompt = f"You requested directions to {location_name} using OSMnx data.\nRoute: {route_coords}\nEstimated distance: {route_length:.2f} meters. Would you like to know more about {location_name}?"
-            openai_response = await get_openai_response(prompt)
-            print(openai_response)
-        else:
-            print("Failed to retrieve directions from OSMnx.")
+            # # Use OpenAI to craft a response 
+            # prompt = f"You requested directions to {location_name} using OSMnx data.\nRoute: {route_coords}\nEstimated distance: {route_length:.2f} meters. Would you like to know more about {location_name}?"
+            # openai_response = await get_openai_response(prompt)
+            # print(openai_response)
+        # else:
+        #     print("Failed to retrieve directions from OSMnx.")
     else:
         print("Failed to retrieve coordinates.")
 
 # Run the main loop synchronously
 if __name__ == "__main__":
-    client = OpenAI(api_key="")  
+    # client = OpenAI(api_key="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")  
     main_loop = asyncio.get_event_loop()
     main_loop.run_until_complete(main())
