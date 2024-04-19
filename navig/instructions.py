@@ -1,5 +1,4 @@
 import requests
-import json
 import math
 
 def fetch_directions(api_url):
