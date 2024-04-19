@@ -25,3 +25,6 @@ source venv/bin/activate
 ```
 call venv/Scripts/activate
 ```
+
+
+## main.py is entry point for ui and speech to text
