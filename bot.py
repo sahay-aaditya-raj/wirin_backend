@@ -1,6 +1,6 @@
 from openai import OpenAI
 
-client = OpenAI()
+client = OpenAI(api_key="api")
 
 # Bot response for User's Prompt
 def bot_response(prompt: str) -> str:
