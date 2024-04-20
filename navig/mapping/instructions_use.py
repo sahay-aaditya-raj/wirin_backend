@@ -1,5 +1,15 @@
 import requests
 import math
+from mapbox import Geocoder
+
+def get_place_name(latitude, longitude):
+    geocoder = Geocoder(access_token="")
+    response = geocoder.reverse(lon=longitude, lat=latitude)
+    if response.status_code == 200:
+        features = response.geojson()['features']
+        if features:
+            return features[0]['place_name']
+    return None
 
 def fetch_directions(api_url):
     try:
@@ -107,24 +117,28 @@ def create_instructions(coordinates):
         start_longitude, start_latitude = coordinates[i]
         end_longitude, end_latitude = coordinates[i + 1]
 
+        start_place = get_place_name(start_latitude, start_longitude)
+        end_place = get_place_name(end_latitude, end_longitude)
+
         current_direction = calculate_direction(start_longitude, start_latitude, end_longitude, end_latitude)
         distance = calculate_distance(start_longitude, start_latitude, end_longitude, end_latitude)
         if prev_direction is None:
-            instructions.append(f"From {coordinates[i]} to {coordinates[i + 1]}: Head {current_direction} towards the destination for {distance:.2f} kilometers.")
+            instructions.append(f"From {start_place} to {end_place}: Head {current_direction} towards the destination for {distance:.2f} kilometers.")
         else:
             dir = calculate_angle(coordinates[i - 1], coordinates[i], coordinates[i + 1])
 
             if dir == 'back':
-                instructions.append(f"At {coordinates[i]}, make a U-turn and continue for {distance:.2f} kilometers.")
+                instructions.append(f"At {start_place}, make a U-turn and continue for {distance:.2f} kilometers.")
             elif dir == 'right':
-                instructions.append(f"At {coordinates[i]}, turn right and continue for {distance:.2f} kilometers.")
+                instructions.append(f"At {start_place}, turn right and continue for {distance:.2f} kilometers.")
             elif dir == 'left':
-                instructions.append(f"At {coordinates[i]}, turn left and continue for {distance:.2f} kilometers.")
+                instructions.append(f"At {start_place}, turn left and continue for {distance:.2f} kilometers.")
             else:
-                instructions.append(f"At {coordinates[i]}, continue straight for {distance:.2f} kilometers.")
+                instructions.append(f"At {start_place}, continue straight for {distance:.2f} kilometers.")
         prev_direction = current_direction
 
     return instructions
+
 
 def create_instructions(coordinates):
     instructions = []
@@ -137,21 +151,24 @@ def create_instructions(coordinates):
         distance = calculate_distance(start_longitude, start_latitude, end_longitude, end_latitude)
         total_distance += distance  # Add the distance to the total
 
+        start_place = get_place_name(start_latitude, start_longitude)
+        end_place = get_place_name(end_latitude, end_longitude)
+
         current_direction = calculate_direction(start_longitude, start_latitude, end_longitude, end_latitude)
 
         if prev_direction is None:
-            instructions.append(f"From {coordinates[i]} to {coordinates[i + 1]}: Head {current_direction} towards the destination for {distance:.2f} kilometers.")
+            instructions.append(f"From {start_place} to {end_place}: Head {current_direction} towards the destination for {distance:.2f} kilometers.")
         else:
             dir = calculate_angle(coordinates[i - 1], coordinates[i], coordinates[i + 1])
 
             if dir == 'back':
-                instructions.append(f"At {coordinates[i]}, make a U-turn and continue for {distance:.2f} kilometers.")
+                instructions.append(f"At {start_place}, make a U-turn and continue for {distance:.2f} kilometers.")
             elif dir == 'right':
-                instructions.append(f"At {coordinates[i]}, turn right and continue for {distance:.2f} kilometers.")
+                instructions.append(f"At {start_place}, turn right and continue for {distance:.2f} kilometers.")
             elif dir == 'left':
-                instructions.append(f"At {coordinates[i]}, turn left and continue for {distance:.2f} kilometers.")
+                instructions.append(f"At {start_place}, turn left and continue for {distance:.2f} kilometers.")
             else:
-                instructions.append(f"At {coordinates[i]}, continue straight for {distance:.2f} kilometers.")
+                instructions.append(f"At {start_place}, continue straight for {distance:.2f} kilometers.")
         prev_direction = current_direction
 
     # Add total distance to the last instruction
