@@ -66,3 +66,10 @@ tzdata==2024.1
 urllib3==2.2.1
 watchdog==4.0.0
 Werkzeug==3.0.2
+aiohttp==3.9.4
+geopy==2.4.1
+mapbox==0.18.1
+nest_asyncio==1.6.0
+networkx==3.3
+osmnx==1.9.2
+
