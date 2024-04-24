@@ -22,4 +22,4 @@ def open_url(destination: str) -> None:
     webbrowser.open(generate_url(destination))
 
 if __name__ == '__main__':
-    open_url("MGR Chennai Central")
+    open_url("KR Puram Railway station, Bengaluru")
