@@ -28,6 +28,13 @@ call venv/Scripts/activate
 
 >to test use
 ```
+python setup_nltp.py
+```
+```
+python -m spacy download en_core_web_sm
+
+```
+```
 streamlit run main.py
 ```
 
