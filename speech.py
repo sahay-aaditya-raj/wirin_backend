@@ -23,9 +23,7 @@ def speech_to_text(streamlit_obj) -> str:
         try:
             # Listen for audio with an increased timeout (e.g., 5 seconds)
             audio = recognizer.listen(source)
-            
             # stramlit object to write
-            streamlit_obj.write("Recognizing...")
             streamlit_obj.write("Recognizing...")
             print("Recognizing...")
             # Recognize speech using Google Speech Recognition
