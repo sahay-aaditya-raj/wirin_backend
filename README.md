@@ -26,6 +26,10 @@ source venv/bin/activate
 call venv/Scripts/activate
 ```
 
+>to test use
+```
+streamlit run main.py
+```
 
 ## main.py is entry point for ui and speech to text
 ## install espeak on linux for text to speech
