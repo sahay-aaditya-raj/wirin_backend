@@ -1,7 +1,8 @@
 import streamlit as st
 from openai import OpenAI
 from speech import speech_to_text
-
+from named_entities import destination_from_text
+from maps import open_url
 # client = OpenAI(
 #     # This is the default and can be omitted
 #     api_key="API_KEY",
@@ -29,8 +30,15 @@ def main():
     if start_stop_button:
         user_input = speech_to_text(st)
         st.write(f"You said: {user_input}")
-        #openai_response = generate_openai_response(user_input)
-        #st.write(openai_response)
+        destination = destination_from_text(user_input)
+        if destination:
+            st.write(f"Destination: {destination}")
+            if st.button("Open Map"):
+                st.write("Opening map...")
+                open_url(destination)
+                
+        else:
+            st.write("No destination found in the text.")
 
     if st.button("Reset"):
         st.empty()

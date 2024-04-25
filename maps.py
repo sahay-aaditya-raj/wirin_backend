@@ -22,4 +22,4 @@ def open_url(destination: str) -> None:
     webbrowser.open(generate_url(destination))
 
 if __name__ == '__main__':
-    open_url("Nagarbhavi circle, bengaluru")
+    open_url("restaurant")
