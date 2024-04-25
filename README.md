@@ -25,3 +25,8 @@ source venv/bin/activate
 ```
 call venv/Scripts/activate
 ```
+
+
+## main.py is entry point for ui and speech to text
+## install espeak on linux for text to speech
+## text_to_speech.py is entry point for text to speech
